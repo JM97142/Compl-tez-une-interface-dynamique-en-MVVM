@@ -47,6 +47,7 @@
             tools:text="Restaurant Indien" />
 
         <com.google.android.material.chip.ChipGroup
+            android:id="@+id/chipgroup"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="32dp"
@@ -85,6 +86,123 @@
 
         </com.google.android.material.chip.ChipGroup>
 
+
+        <TextView
+            android:id="@+id/restaurantRate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp"
+            android:text="4.0"
+            android:textColor="#4d4d50"
+            android:textSize="35sp"
+            app:layout_constraintBottom_toTopOf="@+id/ratingBar"
+            app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
+            app:layout_constraintTop_toBottomOf="@+id/tvRestaurantName" />
+
+        <RatingBar
+            android:id="@+id/ratingBar"
+            style="?attr/ratingBarStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressTint="#FFB800"
+            android:scaleX="1.2"
+            android:scaleY="1.2"
+            android:stepSize="0.2"
+            app:layout_constraintStart_toStartOf="@+id/tvRestaurantName"
+            app:layout_constraintTop_toBottomOf="@id/restaurantRate" />
+
+        <TextView
+            android:id="@+id/totalReview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:text="(257)"
+            app:layout_constraintStart_toStartOf="@+id/restaurantRate"
+            app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
+
+
+        <LinearLayout
+            android:id="@+id/progressBars"
+            android:layout_width="211dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            app:layout_constraintBottom_toBottomOf="@+id/ratingBar"
+            app:layout_constraintEnd_toEndOf="@id/chipgroup"
+            app:layout_constraintTop_toBottomOf="@id/chipgroup"
+            app:layout_constraintTop_toTopOf="@id/restaurantRate">
+
+            <ProgressBar
+                android:id="@+id/progressBar1"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progress="100"
+                android:progressTint="#FFB800" />
+
+            <ProgressBar
+                android:id="@+id/progressBar2"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progressTint="#FFB800"
+                android:progress="100" />
+
+            <ProgressBar
+                android:id="@+id/progressBar3"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progressTint="#FFB800"
+                android:progress="100" />
+
+            <ProgressBar
+                android:id="@+id/progressBar4"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progressTint="#FFB800"
+                android:progress="100" />
+
+            <ProgressBar
+                android:id="@+id/progressBar5"
+                style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:max="100"
+                android:progressTint="#FFB800"
+                android:progress="100" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/review"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:clickable="true"
+            android:focusable="true"
+            android:fontFamily="@font/jakarta_bold"
+            android:text="Laisser un avis"
+            android:textColor="#65656a"
+            app:layout_constraintBottom_toTopOf="@+id/separator"
+            app:layout_constraintEnd_toEndOf="@+id/progressBars"
+            app:layout_constraintTop_toBottomOf="@+id/progressBars" />
+
         <View
             android:id="@+id/separator"
             android:layout_width="0dp"
@@ -96,7 +214,7 @@
             app:layout_constraintBottom_toTopOf="@+id/tvRestaurantHours"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvRestaurantName" />
+            app:layout_constraintTop_toBottomOf="@id/review" />
 
         <ImageView
             android:id="@+id/icon_hours"
@@ -249,6 +367,21 @@
             app:layout_constraintBottom_toBottomOf="@id/tvRestaurantPhoneNumber"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@id/tvRestaurantPhoneNumber" />
+
+
+        <View
+            android:id="@+id/linebottom"
+            android:layout_width="126.72dp"
+            android:layout_height="5dp"
+            android:layout_marginHorizontal="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="12dp"
+            android:background="#DADADA"
+            app:flow_horizontalAlign="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toRightOf="@+id/tvRestaurantPhoneNumber"
+
+            app:layout_constraintTop_toBottomOf="@id/tvRestaurantPhoneNumber" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </ScrollView>
