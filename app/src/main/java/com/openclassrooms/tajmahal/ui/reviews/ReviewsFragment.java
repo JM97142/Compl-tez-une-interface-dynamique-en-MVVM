@@ -67,7 +67,7 @@ public class ReviewsFragment extends Fragment {
             public void onClick(View v) {
                 FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
                 if (fragmentManager.getBackStackEntryCount() > 0) {
-                    fragmentManager.popBackStack(); // Pop the current fragment from the back stack
+                    fragmentManager.popBackStack();
                 } else {
                     getActivity().finish();
                 }

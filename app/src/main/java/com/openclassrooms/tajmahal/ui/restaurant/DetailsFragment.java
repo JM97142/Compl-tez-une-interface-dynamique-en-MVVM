@@ -20,7 +20,6 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
-import com.openclassrooms.tajmahal.ui.reviews.ReviewViewModel;
 
 import java.util.List;
 
@@ -39,7 +38,6 @@ public class DetailsFragment extends Fragment {
 
     private FragmentDetailsBinding binding;
     private DetailsViewModel detailsViewModel;
-    private ReviewViewModel reviewViewModel;
 
     /**
      * This method is called when the fragment is first created.
@@ -64,8 +62,8 @@ public class DetailsFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        setupUI(); // Sets up user interface components.
-        setupViewModel(); // Prepares the ViewModel for the fragment.
+        setupUI();
+        setupViewModel();
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
         detailsViewModel.getReviews().observe(requireActivity(), this::updateUIWithRatings);
     }
@@ -140,10 +138,10 @@ public class DetailsFragment extends Fragment {
         double sum = 0.0;
 
         for (Review review : reviews) {
-            sum += review.getRate(); // Sum all the ratings
+            sum += review.getRate();
         }
 
-        return (float) (sum / reviews.size()); // Return the average
+        return (float) (sum / reviews.size());
     }
 
     /**
