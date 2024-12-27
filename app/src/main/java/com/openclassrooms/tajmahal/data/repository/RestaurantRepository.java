@@ -30,6 +30,7 @@ public class RestaurantRepository {
 
     // The API interface instance that will be used for network requests related to restaurant data.
     private final RestaurantApi restaurantApi;
+
     /**
      * Constructs a new instance of {@link RestaurantRepository} with the given {@link RestaurantApi}.
      *

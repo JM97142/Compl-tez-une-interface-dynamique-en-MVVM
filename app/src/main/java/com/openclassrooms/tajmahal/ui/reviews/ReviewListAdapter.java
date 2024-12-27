@@ -62,18 +62,13 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
      */
     @Override
     public void onBindViewHolder(@NonNull ReviewListAdapter.MyViewHolder holder, int position) {
-
-        // Get the review at the given position in the list
         Review review = reviewList.get(position);
 
-        // Set the review's comment and username into the TextViews
         holder.commentTextView.setText(review.getComment());
         holder.userInList.setText(review.getUsername());
 
-        // Set the rating for the review using the RatingBar
         holder.ratingbarSetup.setRating(review.getRate());
 
-        // Load the user's avatar image into the ImageView using Glide
         Glide.with(holder.itemView.getContext())
                 .load(review.getPicture()) // Load the URL of the avatar image
                 .circleCrop() // Crop the image to make it circular
@@ -105,11 +100,10 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
          */
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            // Initialize the views by finding them by their IDs
-            userInList = itemView.findViewById(R.id.userInList);
+            userInList = itemView.findViewById(R.id.userName);
             commentTextView = itemView.findViewById(R.id.commentTextView);
-            avatarView = itemView.findViewById(R.id.avatarView);
-            ratingbarSetup = itemView.findViewById(R.id.ratingbarSetup);
+            avatarView = itemView.findViewById(R.id.userAvatar);
+            ratingbarSetup = itemView.findViewById(R.id.ratingBar);
         }
     }
 }

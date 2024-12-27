@@ -5,7 +5,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.openclassrooms.tajmahal.data.repository.RestaurantRepository;
-import com.openclassrooms.tajmahal.data.service.RestaurantFakeApi;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
 import java.util.List;
@@ -19,8 +18,8 @@ public class ReviewViewModel extends ViewModel {
      * Initializes the ViewModel by creating a repository and loading the reviews.
      */
     public ReviewViewModel(RestaurantRepository restaurantRepository) {
-        this.restaurantRepository = restaurantRepository; // Initialize the ReviewRepository
-        loadReviews(); // Load the reviews from the repository when the ViewModel is created
+        this.restaurantRepository = restaurantRepository;
+        loadReviews();
     }
 
     /**
@@ -30,7 +29,7 @@ public class ReviewViewModel extends ViewModel {
      * @return An instance of LiveData containing the current list of reviews.
      */
     public LiveData<List<Review>> getReviews() {
-        return reviewsLiveData; // Return LiveData to observe the reviews
+        return reviewsLiveData;
     }
 
     /**
@@ -39,6 +38,6 @@ public class ReviewViewModel extends ViewModel {
      */
     private void loadReviews() {
         List<Review> reviews = (List<Review>) restaurantRepository.getReviews(); // Retrieve the list of reviews from the repository
-        reviewsLiveData.postValue(reviews); // Update the LiveData with the list of reviews
+        reviewsLiveData.postValue(reviews);
     }
 }

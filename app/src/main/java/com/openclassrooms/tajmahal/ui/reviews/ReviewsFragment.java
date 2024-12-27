@@ -24,12 +24,11 @@ import dagger.hilt.android.AndroidEntryPoint;
  * It uses a ViewModel to manage review data and LiveData to observe changes in the data.
  * This fragment provides UI components to display reviews, take user input, and navigate back to the previous screen.
  */
-@AndroidEntryPoint  // Enable Hilt to inject the ViewModel
+@AndroidEntryPoint
 public class ReviewsFragment extends Fragment {
 
-    private FragmentReviewsBinding binding; // Data binding object for the fragment layout
-    private ReviewViewModel reviewViewModel; // ViewModel for managing reviews
-    private float myRating = 0; // Stores the rating selected by the user
+    private FragmentReviewsBinding binding;
+    private ReviewViewModel reviewViewModel;
 
     /**
      * Default constructor for ReviewFragment. No arguments required.
@@ -48,7 +47,6 @@ public class ReviewsFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment using ViewBinding
         binding = FragmentReviewsBinding.inflate(inflater, container, false);
         return binding.getRoot(); // Return the root view for this fragment
     }
@@ -64,7 +62,6 @@ public class ReviewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        // Set up the Toolbar navigation click listener (for back navigation)
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -72,22 +69,17 @@ public class ReviewsFragment extends Fragment {
                 if (fragmentManager.getBackStackEntryCount() > 0) {
                     fragmentManager.popBackStack(); // Pop the current fragment from the back stack
                 } else {
-                    // If there are no fragments in the back stack, finish the activity
                     getActivity().finish();
                 }
             }
         });
 
-        // Initialize the ViewModel to manage review data
         reviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
 
-        // Set up RecyclerView with LinearLayoutManager for displaying reviews
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
 
-        // Observe the reviews LiveData and update the UI when data changes
         reviewViewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
             if (reviews != null) {
-                // Set the adapter for RecyclerView with the list of reviews
                 ReviewListAdapter adapter = new ReviewListAdapter(reviews);
                 binding.recyclerview.setAdapter(adapter);
             }
