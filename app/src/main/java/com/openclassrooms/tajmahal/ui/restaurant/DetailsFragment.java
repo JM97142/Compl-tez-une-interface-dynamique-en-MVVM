@@ -20,6 +20,7 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.ui.reviews.ReviewViewModel;
 
 import java.util.List;
 
@@ -37,8 +38,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class DetailsFragment extends Fragment {
 
     private FragmentDetailsBinding binding;
-
     private DetailsViewModel detailsViewModel;
+    private ReviewViewModel reviewViewModel;
 
     /**
      * This method is called when the fragment is first created.
@@ -66,7 +67,7 @@ public class DetailsFragment extends Fragment {
         setupUI(); // Sets up user interface components.
         setupViewModel(); // Prepares the ViewModel for the fragment.
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
-        detailsViewModel.getReviews().observe(requireActivity(), this::updateUIWithReviews);
+        detailsViewModel.getReviews().observe(requireActivity(), this::updateUIWithRatings);
     }
 
     /**
@@ -132,8 +133,17 @@ public class DetailsFragment extends Fragment {
      *
      * @param reviews The restaurant object containing details to be displayed.
      */
-    private void updateUIWithReviews(List<Review> reviews){
+    private float updateUIWithRatings(List<Review> reviews){
+        if (reviews == null || reviews.isEmpty()) {
+            return 0.0F;
+        }
+        double sum = 0.0;
 
+        for (Review review : reviews) {
+            sum += review.getRate(); // Sum all the ratings
+        }
+
+        return (float) (sum / reviews.size()); // Return the average
     }
 
     /**
