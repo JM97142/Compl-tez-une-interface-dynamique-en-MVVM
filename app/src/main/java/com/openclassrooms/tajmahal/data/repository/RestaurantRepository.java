@@ -5,6 +5,9 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.openclassrooms.tajmahal.data.service.RestaurantApi;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
+import com.openclassrooms.tajmahal.domain.model.Review;
+
+import java.util.List;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -51,4 +54,17 @@ public class RestaurantRepository {
         return new MutableLiveData<>(restaurantApi.getRestaurant());
     }
 
+    /**
+     * Fetches the reviews details.
+     *
+     * This method will make a network call using the provided {@link RestaurantApi} instance
+     * to fetch restaurant data. Note that error handling and any transformations on the data
+     * would need to be managed.
+     *
+     *
+     * @return LiveData holding the reviews details.
+     */
+    public LiveData<List<Review>> getReviews() {
+        return new MutableLiveData<>(restaurantApi.getReviews());
+    }
 }
