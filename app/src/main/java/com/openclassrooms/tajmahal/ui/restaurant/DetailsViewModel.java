@@ -26,7 +26,6 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
  */
 @HiltViewModel
 public class DetailsViewModel extends ViewModel {
-
     private final RestaurantRepository restaurantRepository;
 
     /**
@@ -46,10 +45,6 @@ public class DetailsViewModel extends ViewModel {
      */
     public LiveData<Restaurant> getTajMahalRestaurant() {
         return restaurantRepository.getRestaurant();
-    }
-
-    public LiveData<List<Review>> getReviews() {
-        return restaurantRepository.getReviews();
     }
 
     /**

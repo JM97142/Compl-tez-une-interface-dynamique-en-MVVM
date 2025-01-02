@@ -195,7 +195,7 @@
             android:clickable="true"
             android:focusable="true"
             android:fontFamily="@font/jakarta_bold"
-            android:text="Laisser un avis"
+            android:text="@string/button_review"
             android:textColor="@color/gray"
             app:layout_constraintBottom_toTopOf="@+id/separator"
             app:layout_constraintEnd_toEndOf="@+id/progressBar1"

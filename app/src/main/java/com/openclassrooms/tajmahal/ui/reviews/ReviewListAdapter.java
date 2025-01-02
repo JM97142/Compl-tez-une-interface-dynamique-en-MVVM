@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.MyViewHolder> {
 
-    private List<Review> reviewList = new ArrayList<>(); // List of reviews to be displayed in the RecyclerView
+    private List<Review> reviewList;
 
     /**
      * Constructor for the ReviewListAdapter that initializes the review list.
@@ -32,9 +32,9 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
      */
     public ReviewListAdapter(List<Review> reviews) {
         if (reviews != null) {
-            this.reviewList = reviews; // Initialize with the provided list if not null
+            this.reviewList = reviews;
         } else {
-            this.reviewList = new ArrayList<>();  // Initialize as an empty list if reviews are null
+            this.reviewList = new ArrayList<>();
         }
     }
 
@@ -88,11 +88,10 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
      * MyViewHolder is the ViewHolder class that holds the views for each individual review item.
      */
     protected class MyViewHolder extends RecyclerView.ViewHolder {
-
-        public TextView userInList; // TextView for displaying the username
-        public TextView commentTextView; // TextView for displaying the review comment
-        public ImageView avatarView; // ImageView for displaying the user's avatar
-        public RatingBar ratingbarSetup; // RatingBar for displaying the rating
+        public TextView userInList;
+        public TextView commentTextView;
+        public ImageView avatarView;
+        public RatingBar ratingbarSetup;
 
         /**
          * Constructor for MyViewHolder. Initializes all the views in the item layout.

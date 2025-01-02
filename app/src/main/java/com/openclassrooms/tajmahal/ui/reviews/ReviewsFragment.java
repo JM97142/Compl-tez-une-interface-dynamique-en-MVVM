@@ -14,7 +14,6 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
-import com.openclassrooms.tajmahal.ui.reviews.ReviewListAdapter;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -45,10 +44,9 @@ public class ReviewsFragment extends Fragment {
      * @return The root view of the fragment.
      */
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         binding = FragmentReviewsBinding.inflate(inflater, container, false);
-        return binding.getRoot(); // Return the root view for this fragment
+        return binding.getRoot(); // Returns the root view.
     }
 
     /**
@@ -62,27 +60,8 @@ public class ReviewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
-                if (fragmentManager.getBackStackEntryCount() > 0) {
-                    fragmentManager.popBackStack();
-                } else {
-                    getActivity().finish();
-                }
-            }
-        });
-
         reviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
 
         binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
-
-        reviewViewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
-            if (reviews != null) {
-                ReviewListAdapter adapter = new ReviewListAdapter(reviews);
-                binding.recyclerview.setAdapter(adapter);
-            }
-        });
     }
 }

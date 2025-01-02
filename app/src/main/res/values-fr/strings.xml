@@ -21,7 +21,7 @@
     <string name="icone_weekday">Icone weekday</string>
     <string name="icone_website">Icone website</string>
     <string name="phone_icon">Phone icon</string>
-    <string name="button_note">Laisser un avis</string>
+    <string name="button_review">Laisser un avis</string>
 
 
 </resources>
