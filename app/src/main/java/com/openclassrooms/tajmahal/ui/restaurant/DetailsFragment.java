@@ -73,9 +73,7 @@ public class DetailsFragment extends Fragment {
         reviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
 
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
-        reviewViewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
-
-        });
+        reviewViewModel.getReviews().observe(requireActivity(), this::updateUIWithRatings);
     }
 
     /**
@@ -151,12 +149,13 @@ public class DetailsFragment extends Fragment {
      */
     private void updateUIWithRatings(List<Review> reviews) {
 
-        OptionalDouble averageRate = reviews.stream().mapToInt(Review::getRate).average();
+        OptionalDouble sumRate = reviews.stream().mapToInt(Review::getRate).average();
 
         int oneStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
                 e == 1).count();
         int twoStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
                 e == 2).count();
+
         int threeStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
                 e == 3).count();
         int fourthStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
@@ -170,21 +169,29 @@ public class DetailsFragment extends Fragment {
         numberStarReview = Math.max(numberStarReview, fourthStarReview);
         numberStarReview = Math.max(numberStarReview, fiveStarReview);
 
-        binding.progressBar1.setProgress(oneStarReview);
+
         binding.progressBar1.setMax(numberStarReview);
+        binding.progressBar1.setProgress(oneStarReview);
 
-        binding.progressBar2.setProgress(twoStarReview);
         binding.progressBar2.setMax(numberStarReview);
+        binding.progressBar2.setProgress(twoStarReview);
 
-        binding.progressBar3.setProgress(threeStarReview);
         binding.progressBar3.setMax(numberStarReview);
+        binding.progressBar3.setProgress(threeStarReview);
 
-        binding.progressBar4.setProgress(fourthStarReview);
         binding.progressBar4.setMax(numberStarReview);
+        binding.progressBar4.setProgress(fourthStarReview);
 
-        binding.progressBar5.setProgress(fiveStarReview);
         binding.progressBar5.setMax(numberStarReview);
+        binding.progressBar5.setProgress(fiveStarReview);
+
+        if (sumRate.isPresent()) {
+            binding.restaurantRate.setText(String.format("%.1f", sumRate.getAsDouble()));
+            binding.ratingBar.setRating((float) sumRate.getAsDouble());
+            binding.totalReview.setText(String.format("(%d)", reviews.size()));
+        }
     }
+
     /*private float updateUIWithRatings(List<Review> reviews){
         if (reviews == null || reviews.isEmpty()) {
             return 0.0F;

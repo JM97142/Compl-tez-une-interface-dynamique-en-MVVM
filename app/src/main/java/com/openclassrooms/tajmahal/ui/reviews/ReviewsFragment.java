@@ -110,12 +110,12 @@ public class ReviewsFragment extends Fragment {
     private void newReview() {
         String activeUser = binding.userName.getText().toString();
         String reviewText = binding.reviewEdit.getText().toString();
-        int rating = Math.round(binding.reviewRate.getRating()); // Get the rounded rating from the rating bar
+        int rating = Math.round(binding.reviewRate.getRating());
 
-        Review newReview = new Review(activeUser, "@drawable/avatar.png", reviewText, rating);
+        Review newReview = new Review(activeUser, "https://xsgames.co/randomusers/assets/avatars/female/0.jpg", reviewText, rating);
 
         if (validateReviewData()){
-            reviewViewModel.addReview(newReview);
+            reviewViewModel.addNewReview(newReview);
 
             binding.reviewEdit.setText("");
             binding.reviewRate.setRating(0);

@@ -30,7 +30,7 @@ public class ReviewViewModel extends ViewModel {
         liveDataReviews.postValue(reviews);
     }
 
-    public void addReview(Review review) {
+    public void addNewReview(Review review) {
         if (review.getComment().isEmpty() || review.getRate() <= 0) {
             return;
         }
