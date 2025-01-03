@@ -30,7 +30,6 @@ public class ReviewsFragment extends Fragment {
 
     private FragmentReviewsBinding binding;
     private ReviewViewModel reviewViewModel;
-    private float myRating = 0;
 
     /**
      * Default constructor for ReviewFragment. No arguments required.

@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.MyViewHolder> {
 
-    private List<Review> reviews;
+    private final List<Review> reviewArrayList;
 
     /**
      * Constructor for the ReviewListAdapter that initializes the review list.
@@ -32,9 +32,9 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
      */
     public ReviewListAdapter(List<Review> reviews) {
         if (reviews != null) {
-            this.reviews = reviews;
+            this.reviewArrayList = reviews;
         } else {
-            this.reviews = new ArrayList<>();
+            this.reviewArrayList = new ArrayList<>();
         }
     }
 
@@ -48,9 +48,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
     @NonNull
     @Override
     public ReviewListAdapter.MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Inflate the review item layout and return a new ViewHolder
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.item_review, parent, false);
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_review, parent, false);
         return new MyViewHolder(itemView);
     }
 
@@ -62,8 +60,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
      */
     @Override
     public void onBindViewHolder(@NonNull ReviewListAdapter.MyViewHolder holder, int position) {
-
-        Review review = reviews.get(position);
+        Review review = reviewArrayList.get(position);
 
         holder.commentTextView.setText(review.getComment());
         holder.userName.setText(review.getUsername());
@@ -75,15 +72,16 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
     }
 
     /**
-     * Returns the number of items in the review list.
+     *
      * @return The total number of reviews in the list.
      */
     @Override
     public int getItemCount() {
-        return reviews.size();
+        return reviewArrayList.size();
     }
 
     /**
+     *
      * MyViewHolder is the ViewHolder class that holds the views for each individual review item.
      */
     protected class MyViewHolder extends RecyclerView.ViewHolder {

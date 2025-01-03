@@ -16,7 +16,7 @@ public class ReviewViewModel extends ViewModel {
     private final MutableLiveData<List<Review>> liveDataReviews = new MutableLiveData<>(new ArrayList<>());
 
     /**
-     * Initializes the ViewModel by creating a repository and loading the reviews.
+     * Initializes the ViewModel.
      */
     public ReviewViewModel() {
         reviewsRepository = new ReviewsRepository();
