@@ -68,6 +68,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
 
         Glide.with(holder.itemView.getContext())
                 .load(review.getPicture())
+                .circleCrop()
                 .into(holder.userAvatar);
     }
 

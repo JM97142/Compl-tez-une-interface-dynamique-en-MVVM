@@ -16,6 +16,7 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
+import com.openclassrooms.tajmahal.domain.model.Review;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -30,6 +31,7 @@ public class ReviewsFragment extends Fragment {
 
     private FragmentReviewsBinding binding;
     private ReviewViewModel reviewViewModel;
+    private float userRating = 0;
 
     /**
      * Default constructor for ReviewFragment. No arguments required.
@@ -85,5 +87,55 @@ public class ReviewsFragment extends Fragment {
                 binding.usersReviews.setAdapter(adapter);
             }
         });
+
+        reviewRate();
+
+        binding.buttonValidate.setOnClickListener(v -> newReview());
+    }
+
+    /**
+     *
+     * Save a review rate
+     */
+    public void reviewRate() {
+        binding.reviewRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
+            @Override
+            public void onRatingChanged(RatingBar ratingBar, float rating, boolean fromUser) {
+                userRating = rating;
+            }
+        });
+
+    }
+
+    private void newReview() {
+        String activeUser = binding.userName.getText().toString();
+        String reviewText = binding.reviewEdit.getText().toString();
+        int rating = Math.round(binding.reviewRate.getRating()); // Get the rounded rating from the rating bar
+
+        Review newReview = new Review(activeUser, "@drawable/avatar.png", reviewText, rating);
+
+        if (validateReviewData()){
+            reviewViewModel.addReview(newReview);
+
+            binding.reviewEdit.setText("");
+            binding.reviewRate.setRating(0);
+        }
+    }
+
+    private boolean validateReviewData() {
+        String reviewText = binding.reviewEdit.getText().toString();
+        float rating = binding.reviewRate.getRating();
+
+        if (reviewText.isEmpty()) {
+            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        if (rating == 0) {
+            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
+        return true;
     }
 }

@@ -20,67 +20,87 @@
             app:title="TajMahal"
             app:titleTextColor="@color/black" />
 
-        <ImageView
-            android:id="@+id/userAvatar"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginStart="20dp"
-            android:layout_marginEnd="20dp"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/avatar"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-
-        <TextView
-            android:id="@+id/userName"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/activeUser"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:layout_margin="16dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="100dp"
-            android:fontFamily="@font/jakarta_regular"
-            android:text="Manon_Garcia"
-            android:textColor="#666666"
-            app:layout_constraintStart_toEndOf="@+id/userAvatar"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@id/toolbar"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="4dp">
+
+                <ImageView
+                    android:id="@+id/userAvatar"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:src="@drawable/avatar"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <LinearLayout
+                    android:layout_marginStart="8dp"
+                    android:orientation="vertical"
+                    android:layout_weight="1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/userName"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/jakarta_regular"
+                        android:text="Manon Garcia"
+                        android:textColor="#666666"
+                        app:layout_constraintStart_toEndOf="@+id/userAvatar"
+                        app:layout_constraintTop_toTopOf="parent" />
 
 
-        <RatingBar
-            android:id="@+id/reviewRate"
-            style="?attr/ratingBarStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="39dp"
-            android:isIndicator="false"
-            android:numStars="5"
-            android:progressTint="#FFB800"
-            android:scaleX="1.6"
-            android:scaleY="1.6"
-            app:layout_constraintBottom_toBottomOf="@+id/userAvatar"
-            app:layout_constraintStart_toEndOf="@id/userAvatar"
-            app:layout_constraintTop_toBottomOf="@+id/userName"
-            app:layout_constraintVertical_bias="1" />
+                    <RatingBar
+                        android:id="@+id/reviewRate"
+                        style="?attr/ratingBarStyleSmall"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:isIndicator="false"
+                        android:numStars="5"
+                        android:progressTint="#FFB800"
+                        android:layout_marginTop="5dp"
+                        android:stepSize="1.0"
+                        android:clickable="true"
+                        app:layout_constraintVertical_bias="1"
+                        app:layout_constraintStart_toEndOf="@+id/userAvatar"
+                        app:layout_constraintTop_toTopOf="parent" />
 
+                </LinearLayout>
 
-        <EditText
-            android:id="@+id/reviewEdit"
-            android:layout_width="320dp"
-            android:layout_height="53dp"
-            android:layout_marginTop="50dp"
-            android:fontFamily="@font/jakarta_regular"
-            android:background="@drawable/border"
-            android:hint="Partage ici les détails de votre expérience"
-            android:inputType="text"
-            android:textColor="#666666"
-            android:textSize="13sp"
-            app:layout_constraintStart_toStartOf="@+id/userAvatar"
-            app:layout_constraintTop_toBottomOf="@id/userName" />
+            </LinearLayout>
+
+            <EditText
+                android:id="@+id/reviewEdit"
+                android:layout_width="match_parent"
+                android:layout_height="53dp"
+                android:layout_marginTop="10dp"
+                android:fontFamily="@font/jakarta_regular"
+                android:background="@drawable/border"
+                android:hint="Partage ici les détails de votre expérience"
+                android:inputType="text"
+                android:textColor="#666666"
+                android:textSize="13sp"
+                app:layout_constraintTop_toBottomOf="@id/reviewRate" />
+
+        </LinearLayout>
 
         <com.google.android.material.chip.Chip
             android:id="@+id/buttonValidate"
             android:layout_width="73dp"
             android:layout_height="50dp"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="80dp"
             android:clickable="true"
             android:focusable="true"
             android:text="Valider"
@@ -89,7 +109,7 @@
             app:chipBackgroundColor="#CF2F2F"
             app:chipCornerRadius="12dp"
             app:chipStrokeColor="#CF2F2F"
-            app:layout_constraintEnd_toEndOf="@id/reviewEdit"
+            app:layout_constraintEnd_toEndOf="@id/activeUser"
             app:layout_constraintTop_toTopOf="parent"
             app:textEndPadding="10dp"
             app:textStartPadding="10dp" />
@@ -103,14 +123,14 @@
             android:background="#DADADA"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/reviewEdit" />
+            app:layout_constraintTop_toBottomOf="@id/activeUser" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/usersReviews"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginTop="10dp"
-            app:layout_constraintStart_toStartOf="@+id/userAvatar"
+            app:layout_constraintStart_toStartOf="@+id/activeUser"
             app:layout_constraintTop_toBottomOf="@+id/separator"
             tools:listitem="@layout/item_review"/>
 

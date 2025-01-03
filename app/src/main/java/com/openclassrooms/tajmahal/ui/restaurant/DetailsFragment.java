@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.view.LayoutInflater;
@@ -22,9 +21,11 @@ import com.openclassrooms.tajmahal.R;
 import com.openclassrooms.tajmahal.databinding.FragmentDetailsBinding;
 import com.openclassrooms.tajmahal.domain.model.Restaurant;
 import com.openclassrooms.tajmahal.domain.model.Review;
+import com.openclassrooms.tajmahal.ui.reviews.ReviewViewModel;
 import com.openclassrooms.tajmahal.ui.reviews.ReviewsFragment;
 
 import java.util.List;
+import java.util.OptionalDouble;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -41,6 +42,7 @@ public class DetailsFragment extends Fragment {
 
     private FragmentDetailsBinding binding;
     private DetailsViewModel detailsViewModel;
+    private ReviewViewModel reviewViewModel;
 
     /**
      * This method is called when the fragment is first created.
@@ -67,7 +69,13 @@ public class DetailsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setupUI();
         setupViewModel();
+
+        reviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
+
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
+        reviewViewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
+
+        });
     }
 
     /**
@@ -126,7 +134,6 @@ public class DetailsFragment extends Fragment {
         binding.buttonAdress.setOnClickListener(v -> openMap(restaurant.getAddress()));
         binding.buttonPhone.setOnClickListener(v -> dialPhoneNumber(restaurant.getPhoneNumber()));
         binding.buttonWebsite.setOnClickListener(v -> openBrowser(restaurant.getWebsite()));
-
         binding.review.setOnClickListener(v -> {
             ReviewsFragment reviewsFragment = new ReviewsFragment();
             FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
@@ -142,7 +149,43 @@ public class DetailsFragment extends Fragment {
      *
      * @param reviews The restaurant object containing details to be displayed.
      */
-    private float updateUIWithRatings(List<Review> reviews){
+    private void updateUIWithRatings(List<Review> reviews) {
+
+        OptionalDouble averageRate = reviews.stream().mapToInt(Review::getRate).average();
+
+        int oneStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                e == 1).count();
+        int twoStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                e == 2).count();
+        int threeStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                e == 3).count();
+        int fourthStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                e == 4).count();
+        int fiveStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                e == 5).count();
+
+        int numberStarReview = Math.max(oneStarReview, twoStarReview);
+
+        numberStarReview = Math.max(numberStarReview, threeStarReview);
+        numberStarReview = Math.max(numberStarReview, fourthStarReview);
+        numberStarReview = Math.max(numberStarReview, fiveStarReview);
+
+        binding.progressBar1.setProgress(oneStarReview);
+        binding.progressBar1.setMax(numberStarReview);
+
+        binding.progressBar2.setProgress(twoStarReview);
+        binding.progressBar2.setMax(numberStarReview);
+
+        binding.progressBar3.setProgress(threeStarReview);
+        binding.progressBar3.setMax(numberStarReview);
+
+        binding.progressBar4.setProgress(fourthStarReview);
+        binding.progressBar4.setMax(numberStarReview);
+
+        binding.progressBar5.setProgress(fiveStarReview);
+        binding.progressBar5.setMax(numberStarReview);
+    }
+    /*private float updateUIWithRatings(List<Review> reviews){
         if (reviews == null || reviews.isEmpty()) {
             return 0.0F;
         }
@@ -153,7 +196,7 @@ public class DetailsFragment extends Fragment {
         }
 
         return (float) (sum / reviews.size());
-    }
+    }*/
 
     /**
      * Opens the provided address in Google Maps or shows an error if Google Maps
