@@ -14,7 +14,6 @@
         android:background="#DADADA"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/separator"
         tools:ignore="NotSibling" />
 
     <LinearLayout
@@ -35,7 +34,6 @@
 
             <ImageView
                 android:id="@+id/userAvatar"
-                android:contentDescription="profile picture"
                 android:scaleType="centerCrop"
                 android:src="@drawable/avatar"
                 android:layout_width="40dp"

@@ -20,6 +20,7 @@ public class ReviewViewModel extends ViewModel {
      */
     public ReviewViewModel() {
         reviewsRepository = new ReviewsRepository();
+        reviewsLoaded();
     }
 
     public MutableLiveData<List<Review>> getReviews() {

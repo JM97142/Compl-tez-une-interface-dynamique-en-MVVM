@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.MyViewHolder> {
 
-    private List<Review> reviewList;
+    private List<Review> reviews;
 
     /**
      * Constructor for the ReviewListAdapter that initializes the review list.
@@ -32,9 +32,9 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
      */
     public ReviewListAdapter(List<Review> reviews) {
         if (reviews != null) {
-            this.reviewList = reviews;
+            this.reviews = reviews;
         } else {
-            this.reviewList = new ArrayList<>();
+            this.reviews = new ArrayList<>();
         }
     }
 
@@ -62,17 +62,16 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
      */
     @Override
     public void onBindViewHolder(@NonNull ReviewListAdapter.MyViewHolder holder, int position) {
-        Review review = reviewList.get(position);
+
+        Review review = reviews.get(position);
 
         holder.commentTextView.setText(review.getComment());
-        holder.userInList.setText(review.getUsername());
-
-        holder.ratingbarSetup.setRating(review.getRate());
+        holder.userName.setText(review.getUsername());
+        holder.ratingBar.setRating(review.getRate());
 
         Glide.with(holder.itemView.getContext())
-                .load(review.getPicture()) // Load the URL of the avatar image
-                .circleCrop() // Crop the image to make it circular
-                .into(holder.avatarView); // Set the image into the ImageView
+                .load(review.getPicture())
+                .into(holder.userAvatar);
     }
 
     /**
@@ -81,17 +80,17 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
      */
     @Override
     public int getItemCount() {
-        return reviewList.size();
+        return reviews.size();
     }
 
     /**
      * MyViewHolder is the ViewHolder class that holds the views for each individual review item.
      */
     protected class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView userInList;
+        public ImageView userAvatar;
+        public TextView userName;
+        public RatingBar ratingBar;
         public TextView commentTextView;
-        public ImageView avatarView;
-        public RatingBar ratingbarSetup;
 
         /**
          * Constructor for MyViewHolder. Initializes all the views in the item layout.
@@ -99,10 +98,10 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
          */
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
-            userInList = itemView.findViewById(R.id.userName);
+            userAvatar = itemView.findViewById(R.id.userAvatar);
+            userName = itemView.findViewById(R.id.userName);
+            ratingBar = itemView.findViewById(R.id.ratingBar);
             commentTextView = itemView.findViewById(R.id.commentTextView);
-            avatarView = itemView.findViewById(R.id.userAvatar);
-            ratingbarSetup = itemView.findViewById(R.id.ratingBar);
         }
     }
 }

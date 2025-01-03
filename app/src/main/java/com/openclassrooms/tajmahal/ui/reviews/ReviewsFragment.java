@@ -12,6 +12,8 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
+import android.widget.Toast;
 
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 
@@ -28,6 +30,7 @@ public class ReviewsFragment extends Fragment {
 
     private FragmentReviewsBinding binding;
     private ReviewViewModel reviewViewModel;
+    private float myRating = 0;
 
     /**
      * Default constructor for ReviewFragment. No arguments required.
@@ -60,8 +63,28 @@ public class ReviewsFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fragmentManager = getActivity().getSupportFragmentManager();
+                if (fragmentManager.getBackStackEntryCount() > 0) {
+                    fragmentManager.popBackStack();
+                }
+                else {
+                    getActivity().finish();
+                }
+            }
+        });
+
         reviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
 
-        binding.recyclerview.setLayoutManager(new LinearLayoutManager(getContext()));
+        binding.usersReviews.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        reviewViewModel.getReviews().observe(getViewLifecycleOwner(), reviews -> {
+            if (reviews != null) {
+                ReviewListAdapter adapter = new ReviewListAdapter(reviews);
+                binding.usersReviews.setAdapter(adapter);
+            }
+        });
     }
 }
