@@ -73,7 +73,7 @@ public class DetailsFragment extends Fragment {
         reviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
 
         detailsViewModel.getTajMahalRestaurant().observe(requireActivity(), this::updateUIWithRestaurant); // Observes changes in the restaurant data and updates the UI accordingly.
-        reviewViewModel.getReviews().observe(requireActivity(), this::updateUIWithRatings);
+        reviewViewModel.getReviews().observe(getViewLifecycleOwner(), this::updateUIWithRatings); // Observes changes in the review data and updates the UI accordingly
     }
 
     /**
@@ -148,62 +148,49 @@ public class DetailsFragment extends Fragment {
      * @param reviews The restaurant object containing details to be displayed.
      */
     private void updateUIWithRatings(List<Review> reviews) {
+        if (reviews != null) {
+            OptionalDouble sumRate = reviews.stream().mapToInt(Review::getRate).average();
 
-        OptionalDouble sumRate = reviews.stream().mapToInt(Review::getRate).average();
+            int oneStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                    e == 1).count();
+            int twoStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                    e == 2).count();
 
-        int oneStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
-                e == 1).count();
-        int twoStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
-                e == 2).count();
+            int threeStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                    e == 3).count();
+            int fourthStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                    e == 4).count();
+            int fiveStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
+                    e == 5).count();
 
-        int threeStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
-                e == 3).count();
-        int fourthStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
-                e == 4).count();
-        int fiveStarReview = (int) reviews.stream().mapToInt(Review::getRate).filter(e ->
-                e == 5).count();
+            int numberStarReview = Math.max(oneStarReview, twoStarReview);
 
-        int numberStarReview = Math.max(oneStarReview, twoStarReview);
+            numberStarReview = Math.max(numberStarReview, threeStarReview);
+            numberStarReview = Math.max(numberStarReview, fourthStarReview);
+            numberStarReview = Math.max(numberStarReview, fiveStarReview);
 
-        numberStarReview = Math.max(numberStarReview, threeStarReview);
-        numberStarReview = Math.max(numberStarReview, fourthStarReview);
-        numberStarReview = Math.max(numberStarReview, fiveStarReview);
+            binding.progressBar1.setMax(numberStarReview);
+            binding.progressBar1.setProgress(oneStarReview);
 
+            binding.progressBar2.setMax(numberStarReview);
+            binding.progressBar2.setProgress(twoStarReview);
 
-        binding.progressBar1.setMax(numberStarReview);
-        binding.progressBar1.setProgress(oneStarReview);
+            binding.progressBar3.setMax(numberStarReview);
+            binding.progressBar3.setProgress(threeStarReview);
 
-        binding.progressBar2.setMax(numberStarReview);
-        binding.progressBar2.setProgress(twoStarReview);
+            binding.progressBar4.setMax(numberStarReview);
+            binding.progressBar4.setProgress(fourthStarReview);
 
-        binding.progressBar3.setMax(numberStarReview);
-        binding.progressBar3.setProgress(threeStarReview);
+            binding.progressBar5.setMax(numberStarReview);
+            binding.progressBar5.setProgress(fiveStarReview);
 
-        binding.progressBar4.setMax(numberStarReview);
-        binding.progressBar4.setProgress(fourthStarReview);
-
-        binding.progressBar5.setMax(numberStarReview);
-        binding.progressBar5.setProgress(fiveStarReview);
-
-        if (sumRate.isPresent()) {
-            binding.restaurantRate.setText(String.format("%.1f", sumRate.getAsDouble()));
-            binding.ratingBar.setRating((float) sumRate.getAsDouble());
-            binding.totalReview.setText(String.format("(%d)", reviews.size()));
+            if (sumRate.isPresent()) {
+                binding.restaurantRate.setText(String.format("%.1f", sumRate.getAsDouble()));
+                binding.ratingBar.setRating((float) sumRate.getAsDouble());
+                binding.totalReview.setText(String.format("(%d)", reviews.size()));
+            }
         }
     }
-
-    /*private float updateUIWithRatings(List<Review> reviews){
-        if (reviews == null || reviews.isEmpty()) {
-            return 0.0F;
-        }
-        double sum = 0.0;
-
-        for (Review review : reviews) {
-            sum += review.getRate();
-        }
-
-        return (float) (sum / reviews.size());
-    }*/
 
     /**
      * Opens the provided address in Google Maps or shows an error if Google Maps

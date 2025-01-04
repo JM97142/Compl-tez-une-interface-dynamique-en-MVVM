@@ -20,7 +20,7 @@ import java.util.List;
 /**
  * ReviewListAdapter is responsible for binding a list of reviews to a RecyclerView.
  * It displays each review with the username, comment, rating, and avatar image.
- * The adapter uses Glide to load the user's avatar image.
+ *
  */
 public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.MyViewHolder> {
 
@@ -42,7 +42,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
      * Called when the RecyclerView needs a new ViewHolder to be created.
      * Inflates the layout for each individual review item.
      * @param parent The parent view that the new item view will be attached to.
-     * @param viewType The view type of the new view (if needed).
+     * @param viewType The view type of the new view.
      * @return A new ViewHolder instance.
      */
     @NonNull
@@ -74,7 +74,7 @@ public class ReviewListAdapter extends RecyclerView.Adapter<ReviewListAdapter.My
 
     /**
      *
-     * @return The total number of reviews in the list.
+     * @return The number of reviews in the list.
      */
     @Override
     public int getItemCount() {

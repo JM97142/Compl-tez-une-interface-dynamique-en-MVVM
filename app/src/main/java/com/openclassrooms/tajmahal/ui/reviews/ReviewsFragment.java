@@ -21,8 +21,8 @@ import com.openclassrooms.tajmahal.domain.model.Review;
 import dagger.hilt.android.AndroidEntryPoint;
 
 /**
- * ReviewFragment is responsible for displaying the list of reviews for the restaurant
- * and allowing users to submit new reviews with a rating.
+ * ReviewFragment is responsible for displaying the list of reviews.
+ * and allow users to submit new reviews with a rating.
  * It uses a ViewModel to manage review data and LiveData to observe changes in the data.
  * This fragment provides UI components to display reviews, take user input, and navigate back to the previous screen.
  */
@@ -94,8 +94,8 @@ public class ReviewsFragment extends Fragment {
     }
 
     /**
-     *
-     * Save a review rate
+     * Save rating via the listener for the rating bar.
+     * When the rating is changed the selected rating is stored and displayed as a toast.
      */
     public void reviewRate() {
         binding.reviewRate.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
@@ -107,6 +107,11 @@ public class ReviewsFragment extends Fragment {
 
     }
 
+    /**
+     * Add a new review by collecting user inputs and adding it to the list of reviews.
+     * A new Review object is created and added to the ViewModel LiveData, which will automatically
+     * update the UI to display the new review.
+     */
     private void newReview() {
         String activeUser = binding.userName.getText().toString();
         String reviewText = binding.reviewEdit.getText().toString();
@@ -122,17 +127,21 @@ public class ReviewsFragment extends Fragment {
         }
     }
 
+    /**
+     * Validates the review data to ensure that a rating and a comment is provided.
+     * Displays a toast message if the data is invalid.
+     */
     private boolean validateReviewData() {
         String reviewText = binding.reviewEdit.getText().toString();
         float rating = binding.reviewRate.getRating();
 
         if (reviewText.isEmpty()) {
-            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Vous devez laisser un commentaire.", Toast.LENGTH_SHORT).show();
             return false;
         }
 
         if (rating == 0) {
-            Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getContext(), "Vous devez mettre une note", Toast.LENGTH_SHORT).show();
             return false;
         }
 
