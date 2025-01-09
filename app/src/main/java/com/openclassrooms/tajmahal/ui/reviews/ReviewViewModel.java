@@ -54,14 +54,15 @@ public class ReviewViewModel extends ViewModel {
      * @param review to add a new review.
      * @return true if the review is successfully added.
      */
-    public void addNewReview(Review review) {
+    public boolean addNewReview(Review review) {
         if (review.getComment().isEmpty() || review.getRate() <= 0) {
-            return;
+            return false;
         }
 
         List<Review> currentReviews = new ArrayList<>(liveDataReviews.getValue());
         currentReviews.add(0, review); // Add the new review at the start of the list
 
         liveDataReviews.setValue(currentReviews);
+        return true;
     }
 }
