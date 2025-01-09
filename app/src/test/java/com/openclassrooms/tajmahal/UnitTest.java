@@ -17,7 +17,7 @@ import com.openclassrooms.tajmahal.ui.reviews.ReviewViewModel;
 import java.util.List;
 
 /**
- * class represents a unit test for the AddNewReview functionality.
+ * Class represents unit tests for the AddNewReview functionality.
  *
  */
 public class UnitTest {
@@ -53,5 +53,37 @@ public class UnitTest {
 
             assertTrue(result);
             assertEquals(listReviews, reviewViewModel.getReviews().getValue());
+        }
+
+        /**
+         * Local unit test for adding a new review to the list without comment.
+         *
+         */
+        @Test
+        public void addReviewWithoutComment() {
+            Review reviewWithoutComment = new Review("Manon Garcia", "https://xsgames.co/randomusers/assets/avatars/female/0.jpg", "", 5);
+
+            int listSize = reviewViewModel.getReviews().getValue().size();
+
+            boolean result = reviewViewModel.addNewReview(reviewWithoutComment);
+
+            assertFalse(result);
+            assertEquals(listSize, reviewViewModel.getReviews().getValue().size());
+        }
+
+        /**
+         * Local unit test for adding a new review to the list without rate.
+         *
+         */
+        @Test
+        public void addReviewWithoutRate() {
+            Review reviewWithoutRate = new Review("Manon Garcia", "https://xsgames.co/randomusers/assets/avatars/female/0.jpg", "Test comment", 0);
+
+            int listSize = reviewViewModel.getReviews().getValue().size();
+
+            boolean result = reviewViewModel.addNewReview(reviewWithoutRate);
+
+            assertFalse(result);
+            assertEquals(listSize, reviewViewModel.getReviews().getValue().size());
         }
 }

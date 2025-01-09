@@ -15,6 +15,7 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.openclassrooms.tajmahal.databinding.FragmentReviewsBinding;
 import com.openclassrooms.tajmahal.domain.model.Review;
 
@@ -78,6 +79,11 @@ public class ReviewsFragment extends Fragment {
         });
 
         reviewViewModel = new ViewModelProvider(requireActivity()).get(ReviewViewModel.class);
+
+        Glide.with(getContext())
+                .load("https://xsgames.co/randomusers/assets/avatars/female/0.jpg")
+                .circleCrop()
+                .into(binding.userAvatar);
 
         binding.usersReviews.setLayoutManager(new LinearLayoutManager(getContext()));
 
