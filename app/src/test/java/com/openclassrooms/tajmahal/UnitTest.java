@@ -17,7 +17,7 @@ import com.openclassrooms.tajmahal.ui.reviews.ReviewViewModel;
 import java.util.List;
 
 /**
- * Class represents unit tests for the AddNewReview functionality.
+ * Class represents unit tests for the adding a review functionality.
  *
  */
 public class UnitTest {
@@ -30,6 +30,10 @@ public class UnitTest {
         @Mock
         private Observer<List<Review>> observer;
 
+        /**
+         * This method is called before each test method
+         * for initialize a new ReviewRepository with the mock API.
+         */
         @Before
         public void setUp() {
 
@@ -40,7 +44,6 @@ public class UnitTest {
 
         /**
          * Local unit test for adding a new review to the list.
-         *
          */
         @Test
         public void addReviewToList() {
@@ -57,7 +60,6 @@ public class UnitTest {
 
         /**
          * Local unit test for adding a new review to the list without comment.
-         *
          */
         @Test
         public void addReviewWithoutComment() {
@@ -73,7 +75,6 @@ public class UnitTest {
 
         /**
          * Local unit test for adding a new review to the list without rate.
-         *
          */
         @Test
         public void addReviewWithoutRate() {

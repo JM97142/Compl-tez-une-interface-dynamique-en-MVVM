@@ -60,7 +60,7 @@ public class ReviewViewModel extends ViewModel {
         }
 
         List<Review> currentReviews = new ArrayList<>(liveDataReviews.getValue());
-        currentReviews.add(0, review); // Add the new review at the start of the list
+        currentReviews.add(0, review);
 
         liveDataReviews.setValue(currentReviews);
         return true;
